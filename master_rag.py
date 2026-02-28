@@ -2,12 +2,12 @@ import os
 import time
 import subprocess
 from openai import OpenAI
-
+from dotenv import load_dotenv
 # ==========================================
 # 1. ARCHITECTURE CONFIGURATION
 # ==========================================
 
-from dotenv import load_dotenv
+
 load_dotenv()
 
 
@@ -21,10 +21,10 @@ def main():
     print("\n[INITIATING VECTORLESS RAG PIPELINE]")
     
     # --- Step 1: Secure a Test Document ---
-    pdf_file = "sample.pdf"
+    pdf_file = "attention.pdf"
     if not os.path.exists(pdf_file):
         print(f"--> Downloading test document ({pdf_file})...")
-        subprocess.run(["curl", "-s", "-o", pdf_file, "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"])
+        subprocess.run(["curl", "-s", "-o", pdf_file, "https://arxiv.org/pdf/1706.03762.pdf"])
 
     # --- Step 2: Local Framework Execution ---
     print(f"\n[STEP 1] Running PageIndex Framework locally on {pdf_file}...")
@@ -46,7 +46,7 @@ def main():
         api_key=GROQ_API_KEY
     )
     
-    query = "Explain why mapping a document's semantic structure is better than standard vector chunking."
+    query = "Based strictly on the document, what are the three specific ways multi-head attention is used in the Transformer architecture?"
     
     start_time = time.time()
     response = client.chat.completions.create(
